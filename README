@@ -1,0 +1,35 @@
+HSNTP - Haskell Simple Network Time Protocol
+
+Simple Network Time Protocol is a simple subset of NTP. This package
+includes Haskell libraries to use SNTP Protocol and small client and
+server implementations. The package contains everything needed for a compilation.
+
+Compiling and installation
+
+   Download and unpack.
+   Build and install through Cabal as for other Haskell packages:
+
+        runhaskell Setup configure --user --prefix=$HOME
+        runhaskell Setup build
+        runhaskell Setup install --user
+
+  (You may want to remove the --user flag when installing as root.)
+
+
+Dependencies
+
+The library depends on GHC, but porting should not be too hard as the
+code is quite short.
+
+
+sntpdate server
+
+Sntpdate fetches the date from an (s)ntp-server and tries
+to set the local clock.
+
+
+sntpd
+
+Sntpd serves the local clock to interested (s)ntp clients.
+The program forks into the background. Needs a wrapper
+for non-root operation as ntp runs in a privileged port.
