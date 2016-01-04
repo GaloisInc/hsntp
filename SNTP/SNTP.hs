@@ -35,11 +35,28 @@ data Packet = Packet { word0     :: !Word8,
 		     }
 
 
-emptyPacket = Packet 0 0 0 0 0 0 "" nilTS nilTS nilTS nilTS Nothing nilTS
+emptyPacket = Packet { word0 = 0
+                     , stratum = 0
+                     , poll = 0
+                     , precision = 0
+                     , rootDelay = 0
+                     , rootDisp = 0
+                     , refId = ""
+                     , refTS = nilTS
+                     , origTS = nilTS
+                     , recvTS = nilTS
+                     , transTS = nilTS
+                     , auth = Nothing
+                     , received = nilTS
+	             }
 
 packetLength p = maybe 48 (const 64) (auth p)
 
-liVerMode :: Word8 -> Word8 -> Word8 -> Word8
+-- | Set Leap Indicator, Version, and Mode flags
+liVerMode :: Word8 -- ^ Leap Indicator
+          -> Word8 -- ^ Version
+          -> Word8 -- ^ Mode
+          -> Word8 -- ^ Returns the result of shifting and combining these bitwise flags.
 liVerMode li vn mode = (li `shiftL` 6) + (vn `shiftL` 3) + mode
 
 -- TimeStamps

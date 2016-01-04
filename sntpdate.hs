@@ -15,7 +15,7 @@ main = do putStrLn "SNTP client version 0.1"
 sf d = showFFloat (Just 4) d ""
 
 real host = do putStrLn $ "querying host " ++ host
-	       packet <- query host
+	       packet <- queryLiVerMode 3 4 3 0xfa 0x010000 0x010000 3 host
 	       putStrLn $ "delay: " ++ sf   (delay packet)
 	       putStrLn $ "tdiff: " ++ sf   (tdiff packet)
 	       putStrLn $ "trans: " ++ show (tsToClockTime (transTS packet))
