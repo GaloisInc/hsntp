@@ -21,19 +21,32 @@ tested-with:   GHC==6.8.2
 data-files:    README
 
 Library
-       exposed-modules:  DNS.LoWire, DNS.Type, SNTP.Client, SNTP.SNTP, HSNTP.Util.UDPServer,
-                         HSNTP.Util.UDP, HSNTP.Util.Daemon, HSNTP.Util.Misc, HSNTP.Util.UDPClient
+  exposed-modules:  DNS.LoWire
+                    DNS.Type
+                    SNTP.Client
+                    SNTP.SNTP
+                    HSNTP.Util.UDPServer
+                    HSNTP.Util.UDP
+                    HSNTP.Util.Daemon
+                    HSNTP.Util.Misc
+                    HSNTP.Util.UDPClient
 
-       build-depends:    base>3, array, mtl, network, random, old-time
-       extensions:       CPP, ForeignFunctionInterface
+  build-depends:    base > 3,
+                    array,
+                    mtl,
+                    network,
+                    random,
+                    old-time
 
-       ghc-options:      -O2 -Wall -optl-Wl,-s
-       ghc-prof-options: -prof -auto-all
+  extensions:       CPP, ForeignFunctionInterface
 
-Executable               sntpdate
-       main-is:          sntpdate.hs
-       build-depends:    unix
-       c-sources:        time.c
+  ghc-options:      -O2 -Wall -optl-Wl,-s
+  ghc-prof-options: -prof -auto-all
 
-Executable               sntpd
-      main-is:           sntpd.hs
+Executable sntpdate
+  main-is:          sntpdate.hs
+  build-depends:    unix
+  c-sources:        time.c
+
+Executable sntpd
+  main-is:          sntpd.hs
