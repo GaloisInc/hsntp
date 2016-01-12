@@ -14,7 +14,7 @@ author:        Einar Karttunen
 maintainer:    Einar Karttunen <ekarttun@cs.helsinki.fi>
 homepage:      http://www.cs.helsinki.fi/u/ekarttun/util/
 
-Cabal-Version: >= 1.2
+Cabal-Version: >= 1.8
 build-type:    Simple
 tested-with:   GHC==6.8.2
 
@@ -36,7 +36,10 @@ Library
                     mtl,
                     network,
                     random,
-                    old-time
+                    old-time,
+                    unix
+
+  c-sources:        time.c
 
   extensions:       CPP, ForeignFunctionInterface
 
@@ -45,8 +48,12 @@ Library
 
 Executable sntpdate
   main-is:          sntpdate.hs
-  build-depends:    unix
-  c-sources:        time.c
+  hs-source-dirs:   sntpdate
+  build-depends:    base,
+                    hsntp
 
 Executable sntpd
   main-is:          sntpd.hs
+  hs-source-dirs:   sntpd
+  build-depends:    base,
+                    hsntp
