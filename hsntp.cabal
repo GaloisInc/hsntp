@@ -35,6 +35,7 @@ Library
                     array,
                     mtl,
                     network,
+                    network-bsd,
                     random,
                     old-time,
                     unix

@@ -1,4 +1,5 @@
 {-# LANGUAGE CPP #-}
+{-# LANGUAGE PatternGuards #-}
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Util.UDP
@@ -18,8 +19,6 @@ module HSNTP.Util.UDP (connectUDP, listenUDP,
                  recvBufFrom, sendBufTo,
                  sockAddr, newSock, sClose
                 ) where
-
-import Data.Char
 
 import Network.BSD
 import Network.Socket
@@ -64,6 +63,19 @@ newSock = socket AF_INET Datagram 0
 
 -- | Listen UDP
 listenUDP :: Int -> IO Socket
-listenUDP port = do sock <- socket AF_INET Datagram 0
-                    bindSocket sock $ SockAddrInet (toEnum port) iNADDR_ANY
-                    return sock
+listenUDP port =
+  do let hint = defaultHints{ addrSocketType = Datagram }
+     addrs <- getAddrInfo (Just hint) Nothing (Just (show port))
+     bindSomething addrs
+ where
+  bindSomething addrs =
+    case addrs of
+      [] -> fail ("Couldn't find address to host UDP port " ++ show port)
+      (x:rest) | SockAddrUnix _ <- addrAddress x -> bindSomething rest
+      (x:_) ->
+        do sock <- socket (addrFamily x) (addrSocketType x) (addrProtocol x)
+           bind sock (addrAddress x)
+           return sock
+
+sClose :: Socket -> IO ()
+sClose = close
