@@ -21,7 +21,7 @@ module HSNTP.Util.UDP (connectUDP, listenUDP,
                 ) where
 
 import Network.BSD
-import Network.Socket
+import Network.Socket hiding (sClose)
 
 
 #if (__GLASGOW_HASKELL__ < 603)
