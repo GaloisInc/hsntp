@@ -6,7 +6,7 @@ import Control.Exception
 import Control.Monad
 import Foreign
 import Foreign.Ptr
-import Network.Socket
+import Network.Socket hiding (sClose)
 import Prelude hiding(catch)
 
 import HSNTP.Util.Misc
